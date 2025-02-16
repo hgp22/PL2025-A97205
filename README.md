@@ -4,3 +4,6 @@
 + ![foto](https://github.com/hgp22.png?size=40)
 + Resumo:
 + lista com resultados:
+
+### Nota
+Python 3.13.1
