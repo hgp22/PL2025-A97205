@@ -43,6 +43,29 @@ def markdown_to_html(markdown_text):
     numbered_items = re.findall(r'^(\d+\. .+)$',
                                 html_text, re.MULTILINE)
     
+    # Blockquote
+    blockquote_pattern = r'(?:^> .+$\n?)+'
+    blockquotes = re.finditer(blockquote_pattern,
+                              html_text, re.MULTILINE)
+
+    offset = 0
+
+    for match in blockquotes:
+            original_blockquote = match.group(0)
+            start_pos = match.start() + offset
+            end_pos = match.end() + offset
+
+            # Extract blockquote content
+            content_lines = re.findall(r'^> (.+)$', original_blockquote, re.MULTILINE)
+            html_blockquote = "<blockquote>" + "<br>".join(content_lines) + "</blockquote>"
+
+            # Replace in the text
+            html_text = html_text[:start_pos] + html_blockquote + html_text[end_pos:]
+
+            # Update offset
+            offset += len(html_blockquote) - len(original_blockquote)
+    
+
     if numbered_items:
         list_groups = []
         current_group = [numbered_items[0]]
