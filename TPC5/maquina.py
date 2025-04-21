@@ -3,9 +3,11 @@ import json
 class Maquina:
 
     def __init__(self):
-        with open('stock.json', 'r') as file:
-            self.produtos = json.load(file)
+        with open("stock.json", "r", encoding="utf-8") as f:
+            produtos_lista = json.load(f)
+        self.produtos = {p['cod']: p for p in produtos_lista}
         self.saldo = 0
+        self.produtosAlterados = False
         self.localizacao = "Departamento de Informática - Piso 2"
         self.proprietario = "HGP"
 
@@ -13,34 +15,45 @@ class Maquina:
         return f"""maq: A inicializar...\nmaq: Pode inserir o seu pedido"""
 
     def imprimeProdutos(self):
-        print("maq:" + '\n')
-        for p in self.produtos:
-            print('| {:1} | {:^10} | {:>4} | {:<3} |'
-                  .format(p['nome'], p['preco'],
-                          p['cod'], p['quant']))
-            
+        print("maq:\n")
+        print("| Código |   Nome      | Preço | Qt  |")
+        print("|--------|-------------|-------|-----|")
+        for cod, p in self.produtos.items():
+            print('| {:<6} | {:<11} | {:>5.2f} | {:>3} |'
+              .format(p["cod"], p["nome"], p["preco"], p["quant"]))
+
     def insereSaldo(self, saldo):
         self.saldo += saldo
 
-    # ainda falta adicionar o caso onde a quantidade vá para 0
-    # apago o produto??
-    def compraProduto(self, nomeProd) -> int:
-        for p in self.produtos:
-            if(p['nome'] == nomeProd
-               and self.saldo >= p['preco']
-               and p['quant'] > 0):
-                p['quant'] -= 1
-                Maquina.insereSaldo(-p['preco'])
-                print(f"maq: Pode retirar o produto {p['nome']}")
-                print(f"maq: Saldo = {self.saldo}")
-                return 1
-        return -1
+    def imprimeSaldo(self):
+        print(f"maq: Saldo = {self.saldo}")
 
-    
+    def compraProduto(self, codProd) -> int:
+        produto = self.produtos.get(codProd)
 
+        if not produto:
+            print(f"Produto com código {codProd} não encontrado.")
+            return -1
 
-## Notas
-# preciso de fazer um conversor de 1e30c para 1.30 ou 1,30
-# qual e a convencao dos returns??
-# a maquina apenas retorna o troco quando o utilizador sai
-#   do programa
+        if produto['quant'] == 0:
+            print(f"O produto {produto['nome']} está esgotado.")
+            return -1
+
+        if self.saldo < produto['preco']:
+            print(f"Saldo insuficiente para comprar {produto['nome']}.")
+            self.imprimeSaldo()
+            return -1
+
+        produto['quant'] -= 1
+        self.insereSaldo(-produto['preco'])
+        print(f"maq: Pode retirar o produto {produto['nome']}")
+        self.imprimeSaldo()
+
+        self.produtosAlterados = True
+        return 1
+
+    def saveState(self):
+        if self.produtosAlterados:
+            with open("stock.json", "w", encoding="utf-8") as f:
+                json.dump(list(self.produtos.values()), f, indent=4, ensure_ascii=False)
+        self.produtosAlterados = False
