@@ -1,0 +1,12 @@
+Pseudo Avaliação
+================
+
+Validação do Analisador Léxico
+----------------------------------------
+Summary for Validação do Analisador Léxico
+Total Errors: 0
+Total Lines: 0
+Overall Error Percentage: 0%
+Overall Correctness Grade: 100%
+
+

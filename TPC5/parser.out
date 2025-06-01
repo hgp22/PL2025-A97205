@@ -1,0 +1,119 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    LISTAR
+    PRODUTO
+    SAIR
+    SALDO
+    SELECIONAR
+
+Grammar
+
+Rule 0     S' -> moed
+Rule 1     moed -> MOEDA moeds .
+Rule 2     moeds -> DINHEIRO moedsl
+Rule 3     moedsl -> , DINHEIRO moedsl
+Rule 4     moedsl -> <empty>
+
+Terminals, with rules where they appear
+
+,                    : 3
+.                    : 1
+DINHEIRO             : 2 3
+LISTAR               : 
+MOEDA                : 1
+PRODUTO              : 
+SAIR                 : 
+SALDO                : 
+SELECIONAR           : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+moed                 : 0
+moeds                : 1
+moedsl               : 2 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . moed
+    (1) moed -> . MOEDA moeds .
+
+    MOEDA           shift and go to state 2
+
+    moed                           shift and go to state 1
+
+state 1
+
+    (0) S' -> moed .
+
+
+
+state 2
+
+    (1) moed -> MOEDA . moeds .
+    (2) moeds -> . DINHEIRO moedsl
+
+    DINHEIRO        shift and go to state 4
+
+    moeds                          shift and go to state 3
+
+state 3
+
+    (1) moed -> MOEDA moeds . .
+
+    .               shift and go to state 5
+
+
+state 4
+
+    (2) moeds -> DINHEIRO . moedsl
+    (3) moedsl -> . , DINHEIRO moedsl
+    (4) moedsl -> .
+
+    ,               shift and go to state 7
+    .               reduce using rule 4 (moedsl -> .)
+
+    moedsl                         shift and go to state 6
+
+state 5
+
+    (1) moed -> MOEDA moeds . .
+
+    $end            reduce using rule 1 (moed -> MOEDA moeds . .)
+
+
+state 6
+
+    (2) moeds -> DINHEIRO moedsl .
+
+    .               reduce using rule 2 (moeds -> DINHEIRO moedsl .)
+
+
+state 7
+
+    (3) moedsl -> , . DINHEIRO moedsl
+
+    DINHEIRO        shift and go to state 8
+
+
+state 8
+
+    (3) moedsl -> , DINHEIRO . moedsl
+    (3) moedsl -> . , DINHEIRO moedsl
+    (4) moedsl -> .
+
+    ,               shift and go to state 7
+    .               reduce using rule 4 (moedsl -> .)
+
+    moedsl                         shift and go to state 9
+
+state 9
+
+    (3) moedsl -> , DINHEIRO moedsl .
+
+    .               reduce using rule 3 (moedsl -> , DINHEIRO moedsl .)
+

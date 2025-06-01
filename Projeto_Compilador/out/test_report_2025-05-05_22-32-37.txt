@@ -1,0 +1,54 @@
+Analysis Report
+================
+
+Validação do Analisador Léxico
+----------------------------------------
+File: test/ex1.pp
+Errors:        0
+Total Lines:        4
+Error Percentage: 0%
+Correctness Grade: 100%
+
+File: test/ex2.pp
+Errors:        0
+Total Lines:       21
+Error Percentage: 0%
+Correctness Grade: 100%
+
+File: test/ex3.pp
+Errors:        0
+Total Lines:       11
+Error Percentage: 0%
+Correctness Grade: 100%
+
+File: test/ex4.pp
+Errors:        0
+Total Lines:       20
+Error Percentage: 0%
+Correctness Grade: 100%
+
+File: test/ex5.pp
+Errors:        0
+Total Lines:       14
+Error Percentage: 0%
+Correctness Grade: 100%
+
+File: test/ex6.pp
+Errors:        0
+Total Lines:       17
+Error Percentage: 0%
+Correctness Grade: 100%
+
+File: test/ex7.pp
+Errors:        0
+Total Lines:       24
+Error Percentage: 0%
+Correctness Grade: 100%
+
+Summary for Validação do Analisador Léxico
+Total Errors: 0
+Total Lines: 111
+Overall Error Percentage: 0%
+Overall Correctness Grade: 100%
+
+
